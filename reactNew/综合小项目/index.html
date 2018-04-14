@@ -25,7 +25,7 @@
       render(){
           let aLi =[];
           for(let i=0;i<this.props.PicUrl.length;i++){
-            aLi.push(<img src={'img/'+this.props.PicUrl[i]} className='topImg' style={{'display':i == this.props.BigPicIndex ? 'block' :'none'}}/>);
+            aLi.push(<img src={'img/'+this.props.PicUrl[i]} className='topImg' style={{'display':i == this.props.BigPicIndex ? 'block' :'none','transform':'scale('+this.props.Scale +')'}}/>);
           }
           return(
               <div className="topDiv">
@@ -39,6 +39,12 @@
       }
   }
   class Middle extends React.Component{
+      big(){
+        this.props.Big(this.props.Scale);
+      }
+      small(){
+        this.props.Small(this.props.Scale);
+      }
       render(){
           // let TextList= []
           return(
@@ -47,8 +53,8 @@
                     {this.props.Text[this.props.BigPicIndex]}
                 </span>
                 <div className="right-box">
-                  <span>大</span>
-                  <span>小</span>
+                  <span onClick={this.big.bind(this)}>大</span>
+                  <span onClick={this.small.bind(this)}>小</span>
                 </div>
               </div>
           )
@@ -79,7 +85,8 @@
       constructor(){
           super();
           this.state ={
-          index:1
+          index:1,
+          scale:1
         }
       }
       changeBig(v){
@@ -109,11 +116,29 @@
               })
           }
       }
+      bigFn(bigscale){
+          if(bigscale >=2){
+              alert("已放大到最大值");
+          }else{
+              this.setState({
+                  scale:bigscale + 0.1
+              })
+          }
+      }
+      smallFn(smallScale){
+          if(smallScale <= 0.5){
+              alert("已缩小到最小");
+          }else{
+              this.setState({
+                  scale:smallScale - 0.1
+              })
+          }
+      }
       render(){
           return(
               <div className='wrapper'>
-                <Top PicUrl={this.props.JsonTo.Pic} BigPicIndex={this.state.index} LeftPlayFn={this.LeftPlayPic.bind(this)} RightPlayFn={this.RightPlayPic.bind(this)}/>
-                <Middle Text={this.props.JsonTo.Text} BigPicIndex={this.state.index}/>
+                <Top PicUrl={this.props.JsonTo.Pic} BigPicIndex={this.state.index} LeftPlayFn={this.LeftPlayPic.bind(this)} RightPlayFn={this.RightPlayPic.bind(this)} Scale={this.state.scale}/>
+                <Middle Text={this.props.JsonTo.Text} BigPicIndex={this.state.index} Big={this.bigFn.bind(this)} Small={this.smallFn.bind(this)} Scale={this.state.scale}/>
                 <Bottom ThumnailPic={this.props.JsonTo.Pic} ThumnailFn={this.changeBig.bind(this)} BigPicIndex={this.state.index}/>
               </div>
           )

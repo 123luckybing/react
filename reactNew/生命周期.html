@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  // 组件挂载前后，组件更新前后，组件卸载前 5个
+  class Bing extends React.Component{
+      constructor(){
+          super();
+          this.state = {
+              msg:"hello"
+          }
+      }
+      componentWillMount(){
+          console.log(document.querySelector(".zhou"));
+          //null  上一句话输出null 因为还没挂载，所以找不到
+          console.log(this.props.zhou);
+          //这个能输出，因为参数已经传完，这是还没渲染到app上
+          console.log("组件挂载前");
+          //找组件（元素）找不到，其他能找到
+      }
+      componentDidMount(){
+          console.log(document.querySelector(".zhou"));
+          //元素能找到
+          console.log("组件渲染后");
+          //能找到元素（组件）
+      }
+      // componentWillMount 和 componentDidMount的区别是能否找到元素
+      componentWillUpdate(){
+          console.log("组件更新前");
+      }
+      componentDidUpdate(){
+          console.log("组件更新后");
+      }
+      componentWillUnmount(){
+          console.log('组件卸载前');
+      }
+
+      change(e){
+          // 与组件更新有关
+          this.setState({
+              msg:Math.random()
+          });
+
+          // react阻止事件冒泡
+          e.nativeEvent.stopImmediatePropagation();
+
+          //阻止浏览器默认行为
+          //e.preventDefault();
+
+      }
+      render(){
+          return(
+            <div>
+                <input type="button" value="切换" onClick={this.change.bind(this)}/>
+              <h1 className="zhou">{this.state.msg}</h1>
+            </div>
+          )
+      }
+  }
+  ReactDOM.render(
+      <Bing zhou="zhou"/>,
+      document.getElementById("app")
+  );
+
+
+
+  // 点击后卸载<Bing/>组件
+  document.onclick = function(){
+      ReactDOM.render(
+          <h1>hqh</h1>,
+          app
+      );
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  class JiaoHu extends React.Component{
+    constructor(){
+      super();
+      this.state = {
+          arr : []
+      }
+    }
+    componentWillMount(){
+        // 模拟后台数据加载
+      console.log("开始加载数据了");
+      this.setState({
+        arr:["中国","美国","巴基斯坦","印度"]
+      });
+    }
+    render(){
+        let arrList = [];
+        this.state.arr.forEach((elem,index)=>{
+            arrList.push(<li key={index}>{elem}</li>);
+        });
+        // 通过判断arr的长度来判断是否显示
+        return(
+            <div>
+              <div style={{"display":this.state.arr.length > 0 ? "none" : "block"}}>数据正在加载……</div>
+                <ul>
+                <li style={{"list-style":"none"}}>{arrList}</li>
+              </ul>
+            </div>
+        )
+    }
+  }
+  ReactDOM.render(
+      <JiaoHu/>,
+      document.getElementById("app")
+  );
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  function show(v,min,max) {
+      console.log(v,min,max);
+      if(Number(v)> max){
+          return <div>水烧开啦</div>
+      }else if(Number(v) < min){
+          return <div>水结冰啦</div>
+      }else{
+          return <div>水在烧</div>
+      }
+  }
+
+  class Water extends React.Component{
+      constructor(){
+          super();
+          this.state = {
+              temperature:0
+          }
+      }
+      show(e){
+        this.setState({
+            temperature:e.target.value
+        })
+      }
+
+      render(){
+          return(
+              <div>
+                  <input type="number" onChange={this.show.bind(this)} defaultValue={this.state.temperature}/>
+                  { show(this.state.temperature,this.props.min,this.props.max) }
+              </div>
+          )
+      }
+  }
+
+  ReactDOM.render(
+    <Water min="0" max="80"/>,
+    app
+  )
+</script>
+</body>
+</html>

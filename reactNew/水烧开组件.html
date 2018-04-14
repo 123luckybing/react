@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+    class Show extends React.Component{
+        constructor(){
+            super();
+            this.state ={
+                msg:''
+            }
+        }
+        componentDidUpdate(){
+            console.log(this.props.temperature,this.props.max,this.props.min);
+            this.thisShow();
+        }
+        componentWillMount(){
+            this.thisShow();
+        }
+        thisShow(){
+            if(Number(this.props.temperature) > Number(this.props.max)){
+                this.setState={
+                    msg:"水烧开啦"
+                }
+                //生命周期里不能频繁用setState
+            }else if(Number(this.props.temperature)<Number(this.props.min)){
+               this.setState={
+                   msg:"水结冰啦"
+               };
+            }else{
+                this.setState={
+                    msg:"水在烧"
+                }
+            }
+        }
+        render(){
+            return(
+              <div>{this.setState.msg}</div>
+            )
+        }
+    }
+
+    class Water extends React.Component{
+        constructor(){
+            super();
+            this.state = {
+                temperature:0
+            }
+        }
+        show(e){
+            this.setState({
+                temperature:e.target.value
+            })
+        }
+
+        render(){
+            return(
+                <div>
+                    <input type="number" onChange={this.show.bind(this)} defaultValue={this.state.temperature}/>
+                    <Show temperature={this.state.temperature} min={this.props.min} max={this.props.max} />
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <Water min="0" max="80"/>,
+        app
+    )
+</script>
+</body>
+</html>

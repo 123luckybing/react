@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  class Hello extends React.Component{
+      render(){
+          return(
+            <div>
+              <h1>{this.props.str}</h1>
+            </div>
+          )
+      }
+  }
+  class Welcome extends React.Component{
+      constructor(){
+          super();
+          // 用this用super
+          this.state = {
+              a:3
+          }
+      }
+      // 用constructor来存初始状态
+      render(){
+          return(
+             <div>
+               <Hello str="Welcome React!"/>
+                 <input type="button" value="改变" onClick={this.show.bind(this)}/>
+               <h1>{this.state.a}</h1>
+               <span>hh</span>
+             </div>
+          )
+      }
+      show(){
+         this.setState({
+             a:15
+         })
+      }
+  }
+  ReactDOM.render(
+      <Welcome/>,
+       app
+  );
+</script>
+</body>
+</html>

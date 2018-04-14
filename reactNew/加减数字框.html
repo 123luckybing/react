@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  class Number extends React.Component{
+      constructor(){
+          super();
+          this.state = {
+              number:20
+          }
+      }
+      add(){
+          // 可以三目运算符 Number();把字符串转化成数字～
+          if(this.state.number >= this.props.max){
+
+          }else{
+            this.setState({
+                number:this.state.number + 1
+            })
+          }
+      }
+      reduce(){
+          if(this.state.number <= this.props.min){
+
+          }else{
+            this.setState({
+                number:this.state.number -1
+            })
+          }
+      }
+      render(){
+          return(
+              <div>
+                <input type="button" value="-" onClick = {this.reduce.bind(this)}/>
+                <span>{this.state.number}</span>
+                <input type="button" value="+" onClick = {this.add.bind(this)} />
+              </div>
+          )
+      }
+  }
+  ReactDOM.render(
+      <Number max="25" min="15"/>,
+      document.getElementById("app")
+  );
+</script>
+</body>
+</html>

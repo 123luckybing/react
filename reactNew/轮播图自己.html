@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>轮播图</title>
+  <style>
+    .content {
+      width: 100px;
+      height: 20px;
+      border: 1px solid black;
+    }
+    button.active {
+      background: red;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+    class TabTop extends React.Component{
+        change(e){
+          this.props.ChildFn(e.target.getAttribute("data-buttonIndex"))
+        }
+        render(){
+            let TopList = [];
+            let NameList = this.props.title;
+            for(let i =0;i<NameList.length;i++){
+                TopList.push(<button className={i == this.props.FirstIndex ?'active':""} onClick={this.change.bind(this)} data-buttonIndex={i}>{NameList[i]}</button>);
+            }
+            return(
+                <div>
+                    {TopList}
+                </div>
+            )
+        }
+    }
+
+    class TabBottom extends React.Component{
+      render(){
+          let BottomList = [];
+          let ContentList= this.props.content;
+          for(let i=0;i<ContentList.length;i++){
+              BottomList.push(<div className="content" style={{display: i == this.props.FirstIndex ? "block": "none"}}>{ContentList[i]}</div>);
+          }
+          return(
+              <div>
+                  {BottomList}
+              </div>
+          )
+      }
+  }
+
+  class Tab extends React.Component{
+      constructor(){
+          super();
+          this.state={
+              index:0,
+              timer:null
+          }
+      }
+      IndexChange(NewIndex){
+        this.setState({
+            index:NewIndex
+        })
+      }
+      componentDidMount(){
+          this.AutoPlay();
+      }
+      AutoPlay(){
+        clearInterval(this.timer);
+         this.timer = setInterval(()=>{
+              let index = this.state.index;
+              index++;
+              if(index > 3){
+                  index=0;
+              }
+              // 改变完之后🉐️用setState渲染一下
+              this.setState({
+                  index:index
+              })
+          },this.props.timer);
+      }
+      MouseOver(){
+          clearInterval(this.timer);
+      }
+      MouseOut(){
+          this.AutoPlay();
+      }
+      render(){
+          let name=["杨幂","刘诗诗","赵丽颖","唐嫣"];
+          return(
+              <div onMouseOver={this.MouseOver.bind(this)} style={{'width': '200px','height':'50px','border':'1px solid black'}} onMouseOut={this.MouseOut.bind(this)}>
+                <TabTop title= { name } FirstIndex={this.state.index} ChildFn={this.IndexChange.bind(this)}/>
+                <TabBottom content = { name } FirstIndex={this.state.index} />
+              </div>
+          )
+      }
+  }
+  ReactDOM.render(
+      <Tab timer="1000"/>,
+      app
+  );
+</script>
+</body>
+</html>

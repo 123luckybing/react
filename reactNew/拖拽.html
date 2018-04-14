@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+    }
+    .drag{
+      width: 100px;
+      height: 100px;
+      background: red;
+      position:absolute;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  class Drag extends React.Component{
+      constructor(){
+          super();
+          this.state = {
+              left:0,
+              top:0
+          };
+          this.disX = 0;
+          this.disY = 0;
+      }
+      drag(e){
+             this.disX = e.clientX - e.target.offsetLeft,
+             this.disY = e.clientY - e.target.offsetTop,
+             document.onmousemove = this.fnMove.bind(this);
+             document.onmouseup = this.fnUp.bind(this);
+
+      }
+      fnMove(e){
+          this.setState({
+              left:e.clientX-this.disX,
+              top:e.clientY-this.disY,
+          });
+      }
+      fnUp(){
+          document.onmousemove = null;
+      }
+      render(){
+          return(
+              <div className="drag" style={{"left":this.state.left,"top":this.state.top}} onMouseDown={this.drag.bind(this)} onMouseMove={this.move}>
+
+              </div>
+          )
+      }
+  }
+  ReactDOM.render(
+      <Drag/>,
+      document.getElementById("app")
+  );
+</script>
+</body>
+</html>

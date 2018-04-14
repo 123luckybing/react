@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>循环子组件 颜色随机</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  class Child extends React.Component{
+      render(){
+          return(
+            <li style={{color:this.props.textColor}}>我是子组件</li>
+          )
+      }
+  }
+  class Parent extends React.Component{
+      render(){
+          let arr = [];
+          for(let i = 0 ;i<10;i++){
+              arr.push(<ul><Child textColor = {'rgba(' + parseInt(Math.random() * 256) + ',' + parseInt(Math.random() * 256) + ','+ parseInt(Math.random() * 256) +')'}/></ul>);
+          }
+          return(
+            <div>
+                {arr}
+            </div>
+          )
+      }
+  }
+  ReactDOM.render(
+    <Parent/>,
+    app
+  );
+</script>
+</body>
+</html>

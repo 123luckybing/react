@@ -1,0 +1,77 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  transform: translate(-50%,-50%);
+  border: 1px solid black;
+  overflow: hidden;
+}
+.topDiv {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+.topImg {
+  position: absolute;
+  display :none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  transition: 0.7s;
+}
+.center-box {
+  width: 100%;
+  height: 20px;
+  background: pink;
+}
+.right-box {
+  float: right;
+  right: 30px;
+}
+.right-box span {
+  margin-right: 3px;
+  cursor: pointer;
+  line-height: 20px;
+}
+.left-box {
+  padding-left: 15px;
+}
+.BottomDiv {
+  width: 615px;
+  height: 120px;
+  position: relative;
+}
+.SmallWrapper img {
+  float: left;
+  width: 120px;
+  height: 120px;
+  border: 1px solid black;
+}
+.SmallWrapper img.active {
+  border:3px solid greenyellow;
+}
+.LeftButton , .RightButton {
+  position: absolute;
+  z-index: 2;
+  cursor :pointer;
+  top:50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+}
+.LeftButton {
+  left: 10px;
+}
+.RightButton {
+ right: 10px;
+}

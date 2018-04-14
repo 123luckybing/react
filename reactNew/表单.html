@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script src="bower_components/react/react.production.min.js"></script>
+<script src="bower_components/react/react-dom.production.min.js"></script>
+<script src="bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  //受控表单 原生的会锁死(改不了了) 在原生前加default
+  //表单 defaultValue 来设置默认值
+  //defaultChecked 默认选中
+  class Form extends React.Component{
+      render(){
+          return(
+              <div>
+                <input type="text" defaultValue="你猜"/>
+                <input type="checkbox" defaultChecked="defaultChecked"/>
+              </div>
+          )
+      }
+  }
+  ReactDOM.render(
+    <Form/>,
+    document.getElementById("app")
+  );
+</script>
+</body>
+</html>

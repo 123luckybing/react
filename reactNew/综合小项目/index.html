@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app"></div>
+<script src="../bower_components/react/react.production.min.js"></script>
+<script src="../bower_components/react/react-dom.production.min.js"></script>
+<script src="../bower_components/babel/browser.js"></script>
+<script type="text/babel">
+  let Json ={
+    Pic :["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg"],
+    Text:["FirstPic","SecondPic","ThirdPic","FourthPic","FifthPic"]
+  };
+  class Top extends React.Component{
+      LeftPlay(){
+          this.props.LeftPlayFn(this.props.BigPicIndex);
+      }
+      RightPlay(){
+          this.props.RightPlayFn(this.props.BigPicIndex);
+      }
+      render(){
+          let aLi =[];
+          for(let i=0;i<this.props.PicUrl.length;i++){
+            aLi.push(<img src={'img/'+this.props.PicUrl[i]} className='topImg' style={{'display':i == this.props.BigPicIndex ? 'block' :'none'}}/>);
+          }
+          return(
+              <div className="topDiv">
+                <ul>
+                    {aLi}
+                </ul>
+                <div className="LeftButton" onClick={this.LeftPlay.bind(this)}>&lt;</div>
+                <div className="RightButton" onClick={this.RightPlay.bind(this)}>&gt;</div>
+              </div>
+          )
+      }
+  }
+  class Middle extends React.Component{
+      render(){
+          // let TextList= []
+          return(
+              <div className="center-box">
+                <span className="left-box">
+                    {this.props.Text[this.props.BigPicIndex]}
+                </span>
+                <div className="right-box">
+                  <span>大</span>
+                  <span>小</span>
+                </div>
+              </div>
+          )
+      }
+  }
+  class Bottom extends React.Component{
+      changeBigImg(e){
+          let TargetIndex = e.target.getAttribute("data-ThumnailPicIndex");
+          this.props.ThumnailFn(TargetIndex);
+      }
+      render(){
+          let aLi =[];
+          let ThumnailPic = this.props.ThumnailPic;
+          ThumnailPic.forEach((elem,index)=>{
+            aLi.push(<img src={'img/' + ThumnailPic[index]} key={index} className={ index==this.props.BigPicIndex ? 'active':''}  onClick={this.changeBigImg.bind(this)} data-ThumnailPicIndex={index} />);
+          });
+          return(
+              <div className="BottomDiv" style={{'left':(this.props.BigPicIndex>2)?(this.props.BigPicIndex-2)*(-100)+'px':0}}>
+                <ul className='SmallWrapper'>
+                    {aLi}
+                </ul>
+              </div>
+          )
+      }
+  }
+
+  class Tab extends React.Component {
+      constructor(){
+          super();
+          this.state ={
+          index:1
+        }
+      }
+      changeBig(v){
+        this.setState({
+            index:v
+        })
+      }
+      LeftPlayPic(m) {
+          if (m == 0) {
+              this.setState({
+                  index: this.props.JsonTo.Pic.length -1
+              });
+          } else {
+              this.setState({
+                  index: m - 1
+              })
+          }
+      }
+      RightPlayPic(n){
+          if(n==this.props.JsonTo.Pic.length-1){
+              this.setState({
+                  index: 0
+              })
+          }else{
+              this.setState({
+                  index: n+1
+              })
+          }
+      }
+      render(){
+          return(
+              <div className='wrapper'>
+                <Top PicUrl={this.props.JsonTo.Pic} BigPicIndex={this.state.index} LeftPlayFn={this.LeftPlayPic.bind(this)} RightPlayFn={this.RightPlayPic.bind(this)}/>
+                <Middle Text={this.props.JsonTo.Text} BigPicIndex={this.state.index}/>
+                <Bottom ThumnailPic={this.props.JsonTo.Pic} ThumnailFn={this.changeBig.bind(this)} BigPicIndex={this.state.index}/>
+              </div>
+          )
+      }
+  }
+  ReactDOM.render(
+      <Tab JsonTo={Json} />,
+      app
+  );
+</script>
+</body>
+</html>

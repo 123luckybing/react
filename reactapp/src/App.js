@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Tab from './Table';
 
 class App extends Component {
   render() {
+    let JsonPic =["./img/1.jpg","./img/2.jpg","./img/3.jpg","./img/4.jpg","./img/5.jpg"];
+    // 在这里拼接字符串,不要去后面拼接
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Tab PicSrc={JsonPic} timer='2000'/>
       </div>
     );
   }

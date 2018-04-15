@@ -1,0 +1,61 @@
+*{
+
+}
+.topImg {
+	float: left;
+  width: 360px;
+  height: 220px;
+}
+.wrapper {
+	width: 360px;
+	overflow: hidden;
+	position:relative;
+	height: 220px;
+}
+.tab {
+	width: 1800px;
+	height: 220px;
+	overflow: hidden;
+}
+.menu li{
+	float: left;
+	margin-left: 4px;
+	width: 8px;
+	height: 8px;
+	background: #fff;
+	list-style: none;
+	border-radius: 50%;
+}
+.menu {
+	position: absolute;
+	bottom: 0;
+	left: 100px;
+}
+.menu li.active {
+	transform: scale(1.5);
+	transition: .3s;
+}
+.ImgWrapper {
+	position: absolute;
+	left: 0;
+	transition: .3s;
+}
+.LeftButton , .RightButton {
+	position: absolute;
+	z-index: 20;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+	background: rgba(255,255,255,.5);
+	text-align: center;
+	line-height: 20px;
+}
+.LeftButton {
+	position: absolute;
+	left: 10px;
+}
+.RightButton {
+	position: absolute;
+	right:10px;
+}

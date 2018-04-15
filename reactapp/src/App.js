@@ -8,6 +8,7 @@ class App extends Component {
     return (
       <div className="App">
         <Tab PicSrc={JsonPic} timer='2000'/>
+				<Tab PicSrc={JsonPic} timer='1000'/>
       </div>
     );
   }
